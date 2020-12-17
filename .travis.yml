@@ -1,0 +1,25 @@
+language: node_js
+node_js:
+  - "14.15.1"
+dist: trusty
+sudo: required
+
+branches:
+  only:
+    - master
+
+before_script:
+  - npm install -g @angular/cli
+
+script:
+  - ng lint
+  - npm run test-headless
+  - ng build --prod --base-href https://naxirdan.github.io/travis/
+
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: YOUR_TOKEN
+  local_dir: dist
+  on:
+    branch: master
